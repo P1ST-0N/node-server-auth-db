@@ -6,8 +6,8 @@ import isValidId from "../middlewares/validateId.js";
 // import authControl
 
 const contactsRouter = express.Router();
-
-contactsRouter.use(); //authControl
+//authControl
+// contactsRouter.use();
 
 contactsRouter.get("/", contactsCtrl.getAll);
 

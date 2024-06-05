@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 
-import contactsRouter from "./routes/contactsRouter";
+import contactsRouter from "./routes/contactsRouter.js";
 
 // import routes
 
@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-app.use("/users"); //routes
+// app.use("/users");
 app.use("/api/contacts", contactsRouter);
 
 app.use((_, res) => {
