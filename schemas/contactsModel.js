@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-// import userFilter
+import { userFilter } from "../controllers/contactsControllers";
 
 export const queryProjection = "-createAt -updateAt -owner";
 export const filter = "name, email, phone, favorite";
