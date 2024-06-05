@@ -1,15 +1,15 @@
 import express from "express";
 import contactsCtrl from "../controllers/contactsControllers.js";
-import contactsSchemas 
-// import validateBody
-// import isValid
+import contactsSchemas from "../schemas/contactsSchemas.js";
+import validateBody from "../helpers/validateBody.js";
+import isValidId from "../middlewares/validateId.js";
 // import authControl
 
 const contactsRouter = express.Router();
 
 contactsRouter.use(); //authControl
 
-contactsRouter.get("/"); //getAll
+contactsRouter.get("/", contactsCtrl.getAll);
 
 contactsRouter.get("/:id"); //getOne
 
