@@ -30,6 +30,7 @@ const getAll = async (req, res, next) => {
       filter[field] = queryField;
     }
   });
+  //test
 
   const total = await contactsService.count(filter);
 
