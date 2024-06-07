@@ -45,6 +45,59 @@ const getAll = async (req, res, next) => {
   res.json(reqBody);
 };
 
+const getOne = async (req, res, next) => {
+  const { id } = req.params;
+  const contact = await contactsService.getById(id);
+
+  if (!contact) throw HttpError(404);
+
+  res.json(contact);
+};
+
+const remove = async (req, res, next) => {
+  const { id } = req.params;
+  const contact = await contactsService.remove(id);
+
+  if (!contact) throw HttpError(404);
+
+  res.json(contact);
+};
+
+const create = async (req, res, next) => {
+  const contact = await contactsService.add({
+    ...req.body,
+    owner: req.user._id,
+  });
+
+  res.status(201).json(contact);
+};
+
+const update = async (req, res, next) => {
+  if (Object.keys(req.body).length === 0)
+    throw HttpError(400, "Body must have at least one field");
+
+  const { id } = req.params;
+  const contact = await contactsService.update(id, req.body);
+
+  if (!contact) throw HttpError(404);
+
+  res.json(contact);
+};
+
+const updateStatus = async (req, res, next) => {
+  const { id } = req.params;
+  const contact = await contactsService.update(id, req.body);
+
+  if (!contact) throw HttpError(404);
+
+  res.json(contact);
+};
+
 export default {
   getAll: ctrlWrapper(getAll),
+  getOne: ctrlWrapper(getOne),
+  remove: ctrlWrapper(remove),
+  create: ctrlWrapper(create),
+  update: ctrlWrapper(update),
+  updateStatus: ctrlWrapper(updateStatus),
 };
