@@ -3,11 +3,11 @@ import contactsCtrl from "../controllers/contactsControllers.js";
 import contactsSchemas from "../schemas/contactsSchemas.js";
 import validateBody from "../helpers/validateBody.js";
 import isValidId from "../middlewares/validateId.js";
-// import authControl
+import authControl from "../middlewares/authControl.js";
 
 const contactsRouter = express.Router();
-//authControl
-// contactsRouter.use();
+
+contactsRouter.use(authControl);
 
 contactsRouter.get("/", contactsCtrl.getAll);
 
