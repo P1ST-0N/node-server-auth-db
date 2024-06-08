@@ -11,14 +11,28 @@ const contactsRouter = express.Router();
 
 contactsRouter.get("/", contactsCtrl.getAll);
 
-contactsRouter.get("/:id"); //getOne
+contactsRouter.get("/:id", isValidId, contactsCtrl.getOne);
 
-contactsRouter.delete("/:id"); //remove
+contactsRouter.delete("/:id", isValidId, contactsCtrl.remove);
 
-contactsRouter.post("/"); //create
+contactsRouter.post(
+  "/",
+  validateBody(contactsSchemas.create, true),
+  contactsCtrl.create
+);
 
-contactsRouter.put("/:id"); //update
+contactsRouter.put(
+  "/:id",
+  isValidId,
+  validateBody(contactsSchemas.update, true),
+  contactsCtrl.update
+);
 
-contactsRouter.patch("/:id/favorite"); //updateStatus
+contactsRouter.patch(
+  "/:id/favorite",
+  isValidId,
+  validateBody(contactsSchemas.updateStatus),
+  contactsCtrl.updateStatus
+);
 
 export default contactsRouter;
