@@ -1,7 +1,7 @@
-import HttpError from "../helpers/HttpError";
+import HttpError from "../helpers/HttpError.js";
 import jwt from "jsonwebtoken";
 import usersService from "../services/authServices.js";
-import { userFilter } from "../controllers/contactsControllers";
+import { userFilter } from "../controllers/contactsControllers.js";
 
 const authControl = async (req, _, next) => {
   const { authorization = "" } = req.headers;

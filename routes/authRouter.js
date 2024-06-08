@@ -2,7 +2,7 @@ import express from "express";
 // import authCtrl
 import userSchemas from "../schemas/usersSchemas.js";
 import validateBody from "../helpers/validateBody.js";
-import authControl from "../middlewares/authControl";
+import authControl from "../middlewares/authControl.js";
 import uploadAvatar from "../middlewares/uploadAvatar.js";
 
 const usersRouter = express.Router();
