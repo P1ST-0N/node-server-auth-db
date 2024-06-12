@@ -132,6 +132,26 @@ const verifyEmail = async (req, res, next) => {
   res.json({ message: "Verification successful" });
 };
 
+const sendVerificationEmail = async (req, res, next) => {
+  const email = req.body.email;
+  const user = await usersService.get({ email });
+
+  if (!user) throw HttpError(400, "Email is not registered");
+  if (user.verify) throw HttpError(400, "Verification has already been passed");
+
+  const result = await mailService.sendEmail(
+    mailService.registerTemplate({
+      email,
+      verificationToken: user.verificationToken,
+    })
+  );
+
+  if (!result)
+    throw HttpError(500, "Something went wrong. Please, try again later");
+
+  res.json({ message: "Verification email sent" });
+};
+
 export default {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
@@ -140,4 +160,5 @@ export default {
   updateSubscription: ctrlWrapper(updateSubscription),
   updateAvatar: ctrlWrapper(updateAvatar),
   verifyEmail: ctrlWrapper(verifyEmail),
+  sendVerificationEmail: ctrlWrapper(sendVerificationEmail),
 };
