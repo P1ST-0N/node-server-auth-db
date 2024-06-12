@@ -76,7 +76,27 @@ const logout = async (req, res, next) => {
   res.status(204).end();
 };
 
+const current = async (req, res, next) => {
+  const { email, subscription } = req.user;
+
+  res.json({ email, subscription });
+};
+
+const updateSubscription = async (req, res, next) => {
+  const { email, subscription } = await usersService.update({
+    id: req.user._id,
+    subscription: req.body.subscription,
+  });
+
+  const resBody = { user: { email, subscription } };
+
+  res.json(resBody);
+};
+
 export default {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
+  logout: ctrlWrapper(logout),
+  current: ctrlWrapper(current),
+  updateSubscription: ctrlWrapper(updateSubscription),
 };
