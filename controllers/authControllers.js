@@ -114,6 +114,24 @@ const updateAvatar = async (req, res, next) => {
   res.json({ avatarURL });
 };
 
+const verifyEmail = async (req, res, next) => {
+  const { verificationToken } = req.params;
+
+  if (!verificationToken) throw HttpError(400);
+
+  const user = await usersService.get({ verificationToken });
+
+  if (!user) throw HttpError(404, "User not found");
+
+  await usersService.update({
+    id: user._id,
+    verify: true,
+    verificationToken: null,
+  });
+
+  res.json({ message: "Verification successful" });
+};
+
 export default {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
@@ -121,4 +139,5 @@ export default {
   current: ctrlWrapper(current),
   updateSubscription: ctrlWrapper(updateSubscription),
   updateAvatar: ctrlWrapper(updateAvatar),
+  verifyEmail: ctrlWrapper(verifyEmail),
 };
