@@ -12,9 +12,9 @@ const transport = nodemailer.createTransport({
   },
 });
 
-const sendMail = async (emailData) => {
+const sendEmail = async (emailData) => {
   try {
-    await transport.sendMail({ from: process.env.MAIL_SENDER, ...emailData });
+    await transport.sendEmail({ from: process.env.MAIL_SENDER, ...emailData });
     return true;
   } catch (error) {
     return false;
@@ -33,4 +33,4 @@ const registerTemplate = ({ email, verificationToken }) => {
   };
 };
 
-export default { sendMail, registerTemplate };
+export default { sendEmail, registerTemplate };

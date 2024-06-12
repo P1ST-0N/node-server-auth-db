@@ -8,7 +8,7 @@ import fs from "node:fs/promises";
 import Jimp from "jimp";
 import crypto from "node:crypto";
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
-// import mailService
+import mailService from "../services/mail.js";
 
 const register = async (req, res, next) => {
   const { email, password } = req.body;
@@ -28,7 +28,9 @@ const register = async (req, res, next) => {
     verificationToken,
   });
 
-  //   await mailService.sendEmail
+  await mailService.sendEmail(
+    mailService.registerTemplate({ email, verificationToken })
+  );
 
   res.status(201).json({ user: { email, subscription } });
 };
@@ -62,6 +64,16 @@ const login = async (req, res, next) => {
   };
 
   res.json(resBody);
+};
+
+const logout = async (req, res, next) => {
+  const user = await usersService.get({ _id: req.user._id });
+
+  if (!user) throw HttpError(401);
+
+  await usersService.update({ id: user._id, token: null });
+
+  res.status(204).end();
 };
 
 export default {
